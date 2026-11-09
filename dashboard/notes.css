@@ -1,0 +1,257 @@
+/* CAMPUS360 DIGITAL NOTES */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #030817;
+    color: white;
+}
+
+.container {
+    max-width: 1250px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* HEADER */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 55px;
+}
+
+header h2 {
+    font-size: 26px;
+}
+
+header h2 span {
+    color: #00d9ff;
+}
+
+header a {
+    color: #00d9ff;
+    text-decoration: none;
+    padding: 12px 20px;
+    border: 1px solid #087bff;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+header a:hover {
+    background: #087bff;
+    box-shadow: 0 0 15px #087bff;
+}
+
+/* HERO SECTION */
+
+.hero {
+    padding: 45px 35px;
+    background: linear-gradient(
+        120deg,
+        #073b89,
+        #07306c,
+        #30126e
+    );
+
+    border: 1px solid #078bff;
+    border-radius: 20px;
+
+    box-shadow: 0 0 25px #004cff44;
+
+    margin-bottom: 35px;
+}
+
+.hero h1 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #c5d9ff;
+    font-size: 16px;
+}
+
+/* SEARCH SECTION */
+
+.search-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.search-section input {
+    flex: 1;
+}
+
+.search-section input,
+.search-section select {
+    padding: 16px;
+    background: #0c1d3c;
+    border: 1px solid #1762c5;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+    font-size: 15px;
+}
+
+.search-section input:focus,
+.search-section select:focus {
+    border-color: #00d9ff;
+    box-shadow: 0 0 12px #087bff;
+}
+
+.search-section select option {
+    background: #0c1d3c;
+    color: white;
+}
+
+/* NOTES GRID */
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* NOTE CARD */
+
+.note-card {
+    background: linear-gradient(
+        145deg,
+        #102b57,
+        #0b1b38
+    );
+
+    border: 1px solid #1762c5;
+    border-radius: 18px;
+
+    padding: 28px;
+
+    transition: 0.3s;
+}
+
+.note-card:hover {
+    transform: translateY(-7px);
+    border-color: #00d9ff;
+    box-shadow: 0 0 25px #087bff66;
+}
+
+.icon {
+    font-size: 38px;
+    margin-bottom: 20px;
+}
+
+.note-card h2 {
+    font-size: 21px;
+    margin-bottom: 13px;
+}
+
+.note-card p {
+    color: #a9bbd9;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.note-card span {
+    display: inline-block;
+    background: #073b89;
+    color: #00d9ff;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 22px;
+}
+
+/* DOWNLOAD BUTTON */
+
+.note-card button {
+    display: block;
+    width: 100%;
+    padding: 13px;
+
+    background: linear-gradient(
+        90deg,
+        #00d9ff,
+        #087bff
+    );
+
+    border: none;
+    border-radius: 10px;
+
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.note-card button:hover {
+    box-shadow: 0 0 20px #00d9ff;
+    transform: scale(1.03);
+}
+
+/* EMPTY SEARCH RESULT */
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #a9bbd9;
+    padding: 40px;
+    font-size: 18px;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    color: #7185aa;
+    padding: 35px 10px;
+    margin-top: 40px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width: 900px) {
+
+    .notes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width: 600px) {
+
+    .container {
+        padding: 18px;
+    }
+
+    header {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .hero {
+        padding: 30px 20px;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .search-section {
+        flex-direction: column;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #080f1f;
+    color: white;
+    min-height: 100vh;
+}
+
+.header {
+    background: #101b32;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e3a5f;
+}
+
+.header h2 {
+    font-size: 26px;
+}
+
+.header h2 span {
+    color: #00aaff;
+}
+
+.header a {
+    text-decoration: none;
+    color: white;
+    background: #007bff;
+    padding: 11px 18px;
+    border-radius: 8px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1250px;
+    margin: 40px auto;
+}
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.welcome p {
+    color: #9aabc5;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: #111f38;
+    padding: 25px;
+    border: 1px solid #1d4168;
+    border-radius: 14px;
+}
+
+.stat-card h3 {
+    color: #9aabc5;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.stat-card h2 {
+    color: #00cfff;
+    font-size: 32px;
+}
+
+.attendance-section {
+    background: #111f38;
+    padding: 25px;
+    border: 1px solid #1d4168;
+    border-radius: 15px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.section-header input {
+    width: 320px;
+    padding: 13px;
+    background: #08172c;
+    border: 1px solid #31577d;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.section-header input:focus {
+    border-color: #00cfff;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 750px;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #073b70;
+}
+
+th, td {
+    padding: 16px 12px;
+    text-align: left;
+    border-bottom: 1px solid #25405e;
+    font-size: 14px;
+}
+
+th {
+    color: #00d5ff;
+}
+
+td {
+    color: #e2eaf5;
+}
+
+tbody tr:hover {
+    background: #172d4b;
+}
+
+#emptyMessage {
+    display: none;
+    text-align: center;
+    color: #9aabc5;
+    padding: 25px;
+}
+
+@media (max-width: 700px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .section-header input {
+        width: 100%;
+    }
+
+    .welcome h1 {
+        font-size: 24px;
+    }
+}

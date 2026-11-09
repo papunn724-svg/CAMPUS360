@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMPUS360 | Attendance</title>
+
+    <link rel="stylesheet" href="attendance.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="dashboard.html">← Back to Dashboard</a>
+    </header>
+
+    <section class="heading">
+        <h1>Attendance Management</h1>
+        <p>Track and manage your academic attendance.</p>
+    </section>
+
+    <section class="stats">
+
+        <div class="card">
+            <h3>Total Classes</h3>
+            <h1 id="totalClasses">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Present Classes</h3>
+            <h1 id="presentClasses">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Absent Classes</h3>
+            <h1 id="absentClasses">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Attendance</h3>
+            <h1 id="percentage">0%</h1>
+        </div>
+
+    </section>
+
+    <section class="attendance-box">
+
+        <h2>Attendance Overview</h2>
+
+        <div class="progress-bg">
+            <div id="progressBar"></div>
+        </div>
+
+        <p id="attendanceMessage">
+            Your attendance details will appear here.
+        </p>
+
+    </section>
+
+    <section class="mark-box">
+
+        <h2>Mark Today's Attendance</h2>
+
+        <p>Select your attendance status:</p>
+
+        <div class="buttons">
+
+            <button id="presentBtn">
+                ✓ Present
+            </button>
+
+            <button id="absentBtn">
+                ✕ Absent
+            </button>
+
+        </div>
+
+    </section>
+
+    <section class="history">
+
+        <h2>Attendance History</h2>
+
+        <div id="historyList">
+            <p>No attendance records yet.</p>
+        </div>
+
+    </section>
+
+    <footer>
+        © 2026 CAMPUS360 | Smart Campus Ecosystem
+    </footer>
+
+</div>
+
+<script src="attendance.js"></script>
+
+</body>
+</html>

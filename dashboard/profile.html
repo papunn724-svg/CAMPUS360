@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Student Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+<header class="navbar">
+    <h2>CAMPUS<span>360</span></h2>
+    <a href="dashboard.html">← Back to Dashboard</a>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>My Student Profile 👤</h1>
+        <p>Manage your personal and academic information.</p>
+    </section>
+
+    <section class="profile-card">
+
+        <div class="profile-photo">
+            <img id="profileImage"
+                 src="https://via.placeholder.com/150"
+                 alt="Profile Photo">
+
+            <input type="file" id="photoInput" accept="image/*">
+        </div>
+
+        <h2 id="displayName">Anshuman Nayak</h2>
+        <p>Student | CAMPUS360</p>
+
+    </section>
+
+    <section class="form-card">
+
+        <h2>Edit Profile</h2>
+
+        <form id="profileForm">
+
+            <label>Full Name</label>
+            <input type="text" id="fullName"
+                   value="Anshuman Nayak" required>
+
+            <label>Email Address</label>
+            <input type="email" id="email"
+                   placeholder="Enter your email">
+
+            <label>Student ID</label>
+            <input type="text" id="studentId"
+                   placeholder="Enter Student ID">
+
+            <label>Department</label>
+            <select id="department">
+                <option value="">Select Department</option>
+                <option>Mechanical Engineering</option>
+                <option>Computer Science</option>
+                <option>Electrical Engineering</option>
+                <option>Civil Engineering</option>
+            </select>
+
+            <label>Semester</label>
+            <select id="semester">
+                <option value="">Select Semester</option>
+                <option>1st Semester</option>
+                <option>2nd Semester</option>
+                <option>3rd Semester</option>
+                <option>4th Semester</option>
+                <option>5th Semester</option>
+                <option>6th Semester</option>
+                <option>7th Semester</option>
+                <option>8th Semester</option>
+            </select>
+
+            <label>Phone Number</label>
+            <input type="tel" id="phone"
+                   placeholder="Enter phone number">
+
+            <button type="submit">💾 Save Profile</button>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 CAMPUS360 | Smart Campus Ecosystem
+</footer>
+
+<script src="profile.js"></script>
+
+</body>
+</html>

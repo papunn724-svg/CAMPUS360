@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #030817;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+
+    background:
+    radial-gradient(circle at top right, #123c85, transparent 40%),
+    radial-gradient(circle at bottom left, #36116b, transparent 40%),
+    #030817;
+}
+
+.register-box {
+    width: 100%;
+    max-width: 480px;
+    padding: 35px;
+
+    background: rgba(15, 30, 65, 0.9);
+    border: 1px solid #087bff;
+    border-radius: 22px;
+
+    box-shadow: 0 0 40px #004cff55;
+}
+
+h1 {
+    text-align: center;
+    font-size: 35px;
+}
+
+h1 span {
+    color: #00d9ff;
+}
+
+.subtitle {
+    text-align: center;
+    color: #aab7d0;
+    margin: 12px 0 25px;
+}
+
+form label {
+    display: block;
+    margin: 15px 0 8px;
+}
+
+input:not([type="checkbox"]),
+select {
+    width: 100%;
+    padding: 13px;
+
+    background: #09162e;
+    border: 1px solid #24518b;
+    border-radius: 10px;
+
+    color: white;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #00d9ff;
+    box-shadow: 0 0 10px #00d9ff55;
+}
+
+select option {
+    background: #09162e;
+    color: white;
+}
+
+.terms {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    margin: 22px 0 !important;
+}
+
+.terms input {
+    accent-color: #00d9ff;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 15px;
+
+    background: linear-gradient(90deg, #00cfff, #8155ff);
+    border: none;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px #008cff;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 13px;
+}
+
+.login-link a,
+.back {
+    color: #00d9ff;
+    text-decoration: none;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 22px;
+}
+
+@media(max-width: 480px) {
+    .register-box {
+        padding: 25px 20px;
+    }
+}/* Chrome Autofill Dark Theme */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0 1000px #09162e inset;
+    transition: background-color 5000s ease-in-out 0s;
+}

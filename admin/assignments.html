@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Admin Assignments</title>
+    <link rel="stylesheet" href="assignments.css">
+</head>
+<body>
+
+    <header>
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="admin.html">← Back to Admin</a>
+    </header>
+
+    <main class="container">
+        <h1>📄 Assignment Management</h1>
+        <p>Manage and monitor student assignments.</p>
+
+        <!-- ADD ASSIGNMENT FORM -->
+        <section class="assignment-box">
+            <h2>Create New Assignment</h2>
+
+            <form id="assignmentForm">
+
+                <input
+                    type="text"
+                    id="assignmentTitle"
+                    placeholder="Assignment Title"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="assignmentSubject"
+                    placeholder="Subject Name"
+                    required
+                >
+
+                <textarea
+                    id="assignmentDescription"
+                    placeholder="Assignment Description"
+                    required
+                ></textarea>
+
+                <label for="assignmentDueDate">Due Date:</label>
+                <input
+                    type="date"
+                    id="assignmentDueDate"
+                    required
+                >
+
+                <input
+                    type="number"
+                    id="assignmentMarks"
+                    placeholder="Total Marks"
+                    min="1"
+                    required
+                >
+
+                <button type="submit">Add Assignment</button>
+
+            </form>
+        </section>
+
+        <!-- STUDENT ASSIGNMENTS -->
+        <section class="assignment-box">
+            <h2>Student Assignments</h2>
+
+            <input
+                type="text"
+                id="searchAssignment"
+                placeholder="Search student or assignment..."
+            >
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Student Name</th>
+                            <th>Assignment</th>
+                            <th>Assignment Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="assignmentTable"></tbody>
+                </table>
+            </div>
+
+            <p id="emptyMessage">No assignments found.</p>
+        </section>
+
+    </main>
+
+    <script src="assignments.js"></script>
+</body>
+</html>

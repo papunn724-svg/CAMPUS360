@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMPUS360 | Student Dashboard</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>CAMPUS<span>360</span></h2>
+
+    <p class="menu-title">MAIN MENU</p>
+
+    <a href="#">🏠 Dashboard</a>
+    <a href="attendance.html">📅 Attendance</a>
+    <a href="notes.html">📚 Study Materials</a>
+    <a href="assignments.html">📝 Assignments</a>
+    <a href="events.html">🎓 Campus Events</a>
+    <a href="notifications.html">🔔 Notifications</a>
+    <a href="profile.html">👤 My Profile</a>
+
+    <button id="logoutBtn">🚪 Logout</button>
+
+</div>
+
+
+<div class="main">
+
+    <header>
+
+        <div>
+            <h2>Student Dashboard</h2>
+            <p>Welcome to your campus!</p>
+        </div>
+
+        <div class="profile">
+            👤 <span id="studentName">Student</span>
+        </div>
+
+    </header>
+
+
+    <section class="welcome">
+
+        <h1>Hello, <span id="welcomeName">Student</span> 👋</h1>
+
+        <p>Welcome back to CAMPUS360.</p>
+
+        <p>Your campus journey starts here.</p>
+
+    </section>
+
+
+    <section class="stats">
+
+        <div class="card">
+            <h3>📅</h3>
+            <h2>85%</h2>
+            <p>Attendance</p>
+        </div>
+
+        <div class="card">
+            <h3>📝</h3>
+            <h2>05</h2>
+            <p>Assignments</p>
+        </div>
+
+        <div class="card">
+            <h3>📚</h3>
+            <h2>20</h2>
+            <p>Study Materials</p>
+        </div>
+
+        <div class="card">
+            <h3>🎓</h3>
+            <h2>03</h2>
+            <p>Upcoming Events</p>
+        </div>
+
+    </section>
+
+
+    <section class="student-info">
+
+        <h2>My Student Profile</h2>
+
+        <p>Student Name: <span id="profileName"></span></p>
+
+        <p>Student ID: <span id="profileId"></span></p>
+
+        <p>Email: <span id="profileEmail"></span></p>
+
+        <p>Department: <span id="profileDepartment"></span></p>
+
+    </section>
+
+
+    <footer>
+        © 2026 CAMPUS360 | Smart Campus Ecosystem
+    </footer>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>

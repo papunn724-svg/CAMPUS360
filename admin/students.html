@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMPUS360 | Student Management</title>
+
+    <link rel="stylesheet" href="students.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="admin.html">← Back to Admin</a>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h1>👨‍🎓 Student Management</h1>
+            <p>View and manage all registered students.</p>
+        </section>
+
+        <section class="student-stats">
+            <div class="stat-card">
+                <h3>Total Registered Students</h3>
+                <h2 id="studentCount">0</h2>
+            </div>
+        </section>
+
+        <section class="student-section">
+
+            <div class="section-header">
+                <h2>Registered Students</h2>
+
+                <input
+                    type="text"
+                    id="searchStudent"
+                    placeholder="Search by name, ID or email..."
+                >
+            </div>
+
+            <div class="table-container">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Student Name</th>
+                            <th>Student ID</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="studentTable">
+                        <!-- Students will appear here -->
+                    </tbody>
+                </table>
+
+            </div>
+
+            <p id="emptyMessage" class="empty-message">
+                No students found.
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="students.js"></script>
+
+</body>
+</html>

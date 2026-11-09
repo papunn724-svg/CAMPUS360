@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Assignments</title>
+    <link rel="stylesheet" href="assignments.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="dashboard.html">← Back to Dashboard</a>
+    </header>
+
+    <section class="hero">
+        <h1>Assignment Management 📝</h1>
+        <p>Manage your assignments and submission deadlines.</p>
+    </section>
+
+    <section class="stats">
+
+        <div class="card">
+            <h3>Total Assignments</h3>
+            <h1 id="total">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Pending</h3>
+            <h1 id="pending">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Submitted</h3>
+            <h1 id="submitted">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Overdue</h3>
+            <h1 id="overdue">0</h1>
+        </div>
+
+    </section>
+
+    <!-- MY ASSIGNMENTS -->
+
+    <section class="assignment-section">
+
+        <h2>My Assignments</h2>
+
+        <div class="filters">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Search assignments..."
+            >
+
+            <select id="filter">
+                <option value="all">All Assignments</option>
+                <option value="pending">Pending</option>
+                <option value="submitted">Submitted</option>
+                <option value="overdue">Overdue</option>
+            </select>
+
+        </div>
+
+        <div id="assignmentList"></div>
+
+    </section>
+
+
+    <!-- MY RESULTS AND FEEDBACK -->
+
+    <section class="results-section">
+
+        <h2>🎓 My Results & Feedback</h2>
+
+        <p>Check your assignment marks and teacher feedback.</p>
+
+        <div id="resultsList">
+
+            <p>Loading your results...</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- UPLOAD ASSIGNMENT -->
+
+    <section class="upload-section">
+
+        <h2>Submit Assignment</h2>
+
+        <form id="uploadForm">
+
+            <label>Assignment Title</label>
+
+            <input
+                type="text"
+                id="assignmentTitle"
+                required
+            >
+
+            <label>Select File (PDF, DOC, DOCX)</label>
+
+            <input
+                type="file"
+                id="assignmentFile"
+                accept=".pdf,.doc,.docx"
+                required
+            >
+
+            <button type="submit">
+                Submit Assignment →
+            </button>
+
+        </form>
+
+        <p id="uploadMessage"></p>
+
+    </section>
+
+
+    <footer>
+        © 2026 CAMPUS360 | Smart Campus Ecosystem
+    </footer>
+
+</div>
+
+<script src="assignments.js"></script>
+
+</body>
+</html>

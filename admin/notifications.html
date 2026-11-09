@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Admin Notifications</title>
+    <link rel="stylesheet" href="notifications.css">
+</head>
+<body>
+
+    <header>
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="admin.html">← Back to Admin</a>
+    </header>
+
+    <main class="container">
+        <h1>🔔 Notification Management</h1>
+        <p>Manage campus announcements.</p>
+
+        <section class="form-box">
+            <h2>Send New Notification</h2>
+
+            <form id="notificationForm">
+                <input type="text" id="notificationTitle"
+                    placeholder="Enter notification title" required>
+
+                <textarea id="notificationMessage"
+                    placeholder="Enter notification message" required></textarea>
+
+                <button type="submit">Send Notification</button>
+            </form>
+        </section>
+
+        <section class="notification-box">
+            <h2>All Notifications</h2>
+            <div id="notificationList"></div>
+        </section>
+    </main>
+
+    <script src="notifications.js"></script>
+</body>
+</html>

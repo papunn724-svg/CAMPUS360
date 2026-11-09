@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMPUS360 | Digital Notes</title>
+
+    <link rel="stylesheet" href="notes.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h2>CAMPUS<span>360</span></h2>
+
+        <a href="dashboard.html">
+            ← Back to Dashboard
+        </a>
+    </header>
+
+    <section class="hero">
+
+        <h1>Digital Study Materials 📚</h1>
+
+        <p>Explore your study materials in one place.</p>
+
+    </section>
+
+
+    <section class="search-section">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search your notes..."
+        >
+
+        <select id="subjectFilter">
+
+            <option value="all">All Subjects</option>
+            <option value="programming">Programming</option>
+            <option value="dbms">DBMS</option>
+            <option value="web">Web Development</option>
+            <option value="math">Mathematics</option>
+            <option value="computer">Computer Fundamentals</option>
+
+        </select>
+
+    </section>
+
+
+    <section class="notes-grid" id="notesContainer">
+
+        <div class="note-card" data-subject="programming">
+
+            <div class="icon">💻</div>
+
+            <h2>C Programming</h2>
+
+            <p>Introduction to C Programming and Basics.</p>
+
+            <span>Programming</span>
+
+            <button onclick="downloadNotes('c')">
+                ⬇ Download Notes
+            </button>
+
+        </div>
+
+
+        <div class="note-card" data-subject="dbms">
+
+            <div class="icon">🗄️</div>
+
+            <h2>Database Management</h2>
+
+            <p>DBMS Concepts, SQL and Database Basics.</p>
+
+            <span>DBMS</span>
+
+            <button onclick="downloadNotes('dbms')">
+                ⬇ Download Notes
+            </button>
+
+        </div>
+
+
+        <div class="note-card" data-subject="web">
+
+            <div class="icon">🌐</div>
+
+            <h2>Web Development</h2>
+
+            <p>HTML, CSS and JavaScript Fundamentals.</p>
+
+            <span>Web Development</span>
+
+            <button onclick="downloadNotes('web')">
+                ⬇ Download Notes
+            </button>
+
+        </div>
+
+
+        <div class="note-card" data-subject="math">
+
+            <div class="icon">🧮</div>
+
+            <h2>Mathematics</h2>
+
+            <p>Important Mathematical Concepts and Formulas.</p>
+
+            <span>Mathematics</span>
+
+            <button onclick="downloadNotes('math')">
+                ⬇ Download Notes
+            </button>
+
+        </div>
+
+
+        <div class="note-card" data-subject="computer">
+
+            <div class="icon">🖥️</div>
+
+            <h2>Computer Fundamentals</h2>
+
+            <p>Computer Basics, Hardware and Software.</p>
+
+            <span>Computer Fundamentals</span>
+
+            <button onclick="downloadNotes('computer')">
+                ⬇ Download Notes
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        © 2026 CAMPUS360 | Smart Campus Ecosystem
+    </footer>
+
+</div>
+
+<script src="notes.js"></script>
+
+</body>
+</html>

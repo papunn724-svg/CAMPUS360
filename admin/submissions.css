@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #080f1f;
+    color: white;
+    min-height: 100vh;
+}
+
+header {
+    background: #111c35;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h2 span {
+    color: #00d4ff;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+.container h1 {
+    margin-bottom: 12px;
+}
+
+.container > p {
+    color: #c5d2e8;
+    margin-bottom: 30px;
+}
+
+.submission-box {
+    background: #142b50;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 25px;
+}
+
+.submission-box h2 {
+    margin-bottom: 20px;
+}
+
+#searchSubmission {
+    padding: 12px;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 7px;
+    border: 1px solid #526987;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #405779;
+}
+
+th {
+    background: #087bff;
+    color: white;
+}
+
+td a {
+    color: #00d4ff;
+}
+
+#emptyMessage {
+    margin-top: 20px;
+    color: #c5d2e8;
+}

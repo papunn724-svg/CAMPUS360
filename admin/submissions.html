@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Student Submissions</title>
+    <link rel="stylesheet" href="submissions.css">
+</head>
+<body>
+
+    <header>
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="admin.html">← Back to Admin</a>
+    </header>
+
+    <main class="container">
+
+        <h1>📄 Student Submissions</h1>
+        <p>View, download and grade student assignments.</p>
+
+        <section class="submission-box">
+
+            <h2>All Student Submissions</h2>
+
+            <input
+                type="text"
+                id="searchSubmission"
+                placeholder="Search student or assignment..."
+            >
+
+            <div class="table-container">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Student Name</th>
+                            <th>Student ID</th>
+                            <th>Assignment</th>
+                            <th>Submission Date</th>
+                            <th>Uploaded File</th>
+                            <th>Obtained Marks</th>
+                            <th>Feedback</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="submissionTable"></tbody>
+
+                </table>
+
+            </div>
+
+            <p id="emptyMessage">No submissions found.</p>
+
+        </section>
+
+    </main>
+
+    <script src="submissions.js"></script>
+
+</body>
+</html>

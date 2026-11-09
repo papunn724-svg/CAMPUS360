@@ -1,0 +1,197 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #030817;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+header h2 span {
+    color: #00d9ff;
+}
+
+header a {
+    color: #00d9ff;
+    text-decoration: none;
+}
+
+.heading {
+    margin-bottom: 35px;
+}
+
+.heading h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.heading p {
+    color: #a9bbd9;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #0c1d3c;
+    padding: 25px;
+    border: 1px solid #1762c5;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 0 20px #087bff77;
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    color: #a9bbd9;
+    font-size: 15px;
+    margin-bottom: 18px;
+}
+
+.card h1 {
+    color: #00d9ff;
+    font-size: 32px;
+}
+
+.attendance-box,
+.mark-box,
+.history {
+    background: #0c1d3c;
+    padding: 30px;
+    border: 1px solid #1762c5;
+    border-radius: 16px;
+    margin-bottom: 25px;
+}
+
+.attendance-box h2,
+.mark-box h2,
+.history h2 {
+    color: #00d9ff;
+    margin-bottom: 25px;
+}
+
+.progress-bg {
+    width: 100%;
+    height: 20px;
+    background: #263858;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00d9ff, #087bff);
+    border-radius: 20px;
+    transition: width 0.5s;
+}
+
+#attendanceMessage {
+    color: #a9bbd9;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.buttons button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#presentBtn {
+    background: #00a878;
+}
+
+#absentBtn {
+    background: #e63955;
+}
+
+.buttons button:hover {
+    transform: translateY(-3px);
+    opacity: 0.85;
+}
+
+.history p {
+    color: #a9bbd9;
+    margin: 12px 0;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px;
+    margin-top: 10px;
+    background: #10294f;
+    border-radius: 10px;
+}
+
+.present-status {
+    color: #00e6a0;
+}
+
+.absent-status {
+    color: #ff647c;
+}
+
+footer {
+    text-align: center;
+    color: #7185aa;
+    margin-top: 40px;
+}
+
+@media(max-width: 800px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 500px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 18px;
+    }
+
+    header {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+}

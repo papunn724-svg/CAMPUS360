@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Admin Login</title>
+    <link rel="stylesheet" href="admin-login.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="login-box">
+
+            <h1>CAMPUS<span>360</span></h1>
+
+            <p class="subtitle">Welcome Back, Administrator!</p>
+
+            <form id="adminLoginForm">
+
+                <label>Email Address</label>
+                <input
+                    type="email"
+                    id="adminEmail"
+                    placeholder="Enter admin email"
+                    required
+                >
+
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Enter admin password"
+                    required
+                >
+
+                <button type="submit" class="login-btn">
+                    ADMIN LOGIN →
+                </button>
+
+            </form>
+
+            <p id="loginMessage"></p>
+
+            <a href="../index.html" class="back">
+                ← Back to Home
+            </a>
+
+        </div>
+    </div>
+
+    <script src="admin-login.js"></script>
+
+</body>
+</html>

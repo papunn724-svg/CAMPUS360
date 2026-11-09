@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMPUS360 | Notifications</title>
+
+    <link rel="stylesheet" href="notifications.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <h2>CAMPUS<span>360</span></h2>
+
+    <a href="dashboard.html">← Back to Dashboard</a>
+
+</header>
+
+<main class="container">
+
+    <!-- Hero Section -->
+
+    <section class="hero">
+
+        <div>
+            <h1>Notifications 🔔</h1>
+
+            <p>
+                Stay updated with your campus activities
+                and important announcements.
+            </p>
+        </div>
+
+        <div class="notification-badge">
+            <span id="unreadCount">0</span>
+            <small>Unread Notifications</small>
+        </div>
+
+    </section>
+
+
+    <!-- Statistics -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <h2 id="totalCount">0</h2>
+            <p>Total Notifications</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="readCount">0</h2>
+            <p>Read</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="pendingCount">0</h2>
+            <p>Unread</p>
+        </div>
+
+    </section>
+
+
+    <!-- Notification Controls -->
+
+    <section class="notification-section">
+
+        <div class="section-heading">
+
+            <h2>All Notifications</h2>
+
+            <button id="markAllBtn">
+                ✓ Mark All as Read
+            </button>
+
+        </div>
+
+
+        <!-- Filters -->
+
+        <div class="controls">
+
+            <input
+                type="text"
+                id="searchNotification"
+                placeholder="🔍 Search notifications..."
+            >
+
+            <select id="filterNotification">
+
+                <option value="All">All Notifications</option>
+
+                <option value="Unread">Unread</option>
+
+                <option value="Read">Read</option>
+
+                <option value="Assignment">Assignments</option>
+
+                <option value="Attendance">Attendance</option>
+
+                <option value="Event">Events</option>
+
+                <option value="Announcement">Announcements</option>
+                <option value="Result">Results</option>
+            </select>
+
+        </div>
+
+
+        <!-- Notification List -->
+
+        <div id="notificationList">
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        © 2026 CAMPUS360 | Smart Campus Ecosystem
+
+    </footer>
+
+</main>
+
+
+<script src="notifications.js"></script>
+
+</body>
+</html>

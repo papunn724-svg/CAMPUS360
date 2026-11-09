@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAMPUS360 | Admin Attendance</title>
+
+    <link rel="stylesheet" href="attendance.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="admin.html">← Back to Admin</a>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h1>📊 Attendance Management</h1>
+            <p>Monitor and manage student attendance records.</p>
+        </section>
+
+        <!-- ATTENDANCE DATE -->
+
+        <section class="attendance-date">
+            <label for="attendanceDate">Select Attendance Date:</label>
+            <input type="date" id="attendanceDate">
+        </section>
+
+        <!-- STATISTICS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <h3>Total Students</h3>
+                <h2 id="totalStudents">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Present Today</h3>
+                <h2 id="presentToday">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Absent Today</h3>
+                <h2 id="absentToday">0</h2>
+            </div>
+
+        </section>
+
+        <!-- ATTENDANCE MANAGEMENT -->
+
+        <section class="attendance-section">
+
+            <div class="section-header">
+
+                <h2>Student Attendance Records</h2>
+
+                <input
+                    type="text"
+                    id="searchStudent"
+                    placeholder="Search student by name or ID..."
+                >
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Student Name</th>
+                            <th>Student ID</th>
+                            <th>Present Days</th>
+                            <th>Absent Days</th>
+                            <th>Attendance %</th>
+                            <th>Mark Attendance</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="attendanceTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <p id="emptyMessage">No student records found.</p>
+
+        </section>
+
+    </main>
+
+    <script src="attendance.js"></script>
+
+</body>
+</html>

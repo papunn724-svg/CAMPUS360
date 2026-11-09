@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Event Management</title>
+    <link rel="stylesheet" href="events.css">
+</head>
+<body>
+
+    <header>
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="admin.html" class="back-btn">← Back to Admin</a>
+    </header>
+
+    <main class="container">
+
+        <h1>🎉 Event Management</h1>
+        <p>Manage all campus events from one place.</p>
+
+        <section class="event-form">
+            <h2>Add New Event</h2>
+
+            <form id="eventForm">
+                <input type="text" id="eventName"
+                    placeholder="Enter event name" required>
+
+                <input type="date" id="eventDate" required>
+
+                <input type="text" id="eventVenue"
+                    placeholder="Enter event venue" required>
+
+                <textarea id="eventDescription"
+                    placeholder="Enter event description" required></textarea>
+
+                <button type="submit">Add Event</button>
+            </form>
+        </section>
+
+        <section class="event-list">
+            <h2>Campus Events</h2>
+
+            <input type="text" id="searchEvent"
+                placeholder="Search events...">
+
+            <div id="eventContainer"></div>
+        </section>
+
+    </main>
+
+    <script src="events.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Private environment files
+.env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+
+# Uploaded files
+server/uploads/*
+
+# System files
+.DS_Store
+Thumbs.db

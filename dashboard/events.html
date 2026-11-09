@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Campus Events</title>
+    <link rel="stylesheet" href="events.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <h2>CAMPUS<span>360</span></h2>
+    <a href="dashboard.html">← Back to Dashboard</a>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>Campus Events 🎓</h1>
+        <p>Discover, explore and participate in campus activities.</p>
+    </section>
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <h2 id="totalEvents">0</h2>
+            <p>Total Events</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="upcomingEvents">0</h2>
+            <p>Upcoming Events</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="registeredEvents">0</h2>
+            <p>My Registrations</p>
+        </div>
+
+    </section>
+
+    <section class="event-section">
+
+        <div class="section-heading">
+            <h2>Explore Events</h2>
+            <input type="text" id="searchEvent"
+                placeholder="🔍 Search events...">
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-category="All">All</button>
+            <button class="filter-btn" data-category="Technical">Technical</button>
+            <button class="filter-btn" data-category="Cultural">Cultural</button>
+            <button class="filter-btn" data-category="Sports">Sports</button>
+        </div>
+
+        <div class="event-grid" id="eventGrid"></div>
+
+    </section>
+
+    <footer>
+        © 2026 CAMPUS360 | Smart Campus Ecosystem
+    </footer>
+
+</main>
+
+<script src="events.js"></script>
+
+</body>
+</html>

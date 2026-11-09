@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS360 | Admin Dashboard</title>
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h2>CAMPUS<span>360</span></h2>
+        <a href="#" id="adminLogout">Logout</a>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h1>Admin Dashboard 👨‍💻</h1>
+            <p>Manage your entire campus from one place.</p>
+        </section>
+
+        <section class="stats">
+
+            <div class="card">
+                <h3>Total Students</h3>
+                <h2 id="totalStudents">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Attendance</h3>
+                <h2 id="totalAttendance">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Assignments</h3>
+                <h2 id="totalAssignments">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Campus Events</h3>
+                <h2 id="totalEvents">0</h2>
+            </div>
+
+        </section>
+
+        <section class="admin-menu">
+
+            <h2>Management Section</h2>
+
+            <div class="menu-grid">
+
+                <a href="students.html" class="menu-card">
+                  <h3>👨‍🎓 Student Management</h3>
+                  <p>View and manage student details.</p>
+                </a>
+
+                <a href="attendance.html" class="menu-card">
+                  <h3>📊 Attendance Management</h3>
+                   <p>Monitor student attendance.</p>
+                </a>
+
+               <a href="assignments.html" class="menu-card">
+                  <h3>📄 Assignment Management</h3>
+                  <p>Manage student assignments.</p>
+                </a>
+               <a href="submissions.html" class="menu-card">
+                   <h3>📤 Student Submissions</h3>
+                   <p>View and download student assignment submissions.</p>
+                </a>
+
+               <a href="events.html" class="menu-card">
+                   <h3>🎉 Event Management</h3>
+                   <p>Manage campus events.</p>
+               </a>
+
+               <a href="notifications.html" class="menu-card">
+                   <h3>🔔 Notifications</h3>
+                   <p>Manage campus announcements.</p>
+               </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="admin.js"></script>
+
+</body>
+</html>

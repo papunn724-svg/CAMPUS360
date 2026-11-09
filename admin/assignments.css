@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #080f1f;
+    color: white;
+    min-height: 100vh;
+}
+
+header {
+    background: #101b32;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e3a5f;
+}
+
+header h2 span {
+    color: #00cfff;
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    background: #007bff;
+    padding: 11px 18px;
+    border-radius: 8px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.container > h1 {
+    margin-bottom: 10px;
+}
+
+.container > p {
+    color: #9aabc5;
+    margin-bottom: 30px;
+}
+
+.assignment-box {
+    background: #111f38;
+    padding: 25px;
+    border: 1px solid #1d4168;
+    border-radius: 15px;
+}
+
+.assignment-box h2 {
+    margin-bottom: 20px;
+}
+
+#searchAssignment {
+    width: 320px;
+    max-width: 100%;
+    padding: 13px;
+    margin-bottom: 20px;
+    background: #08172c;
+    border: 1px solid #31577d;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #073b70;
+}
+
+th, td {
+    padding: 16px 12px;
+    text-align: left;
+    border-bottom: 1px solid #25405e;
+}
+
+th {
+    color: #00d5ff;
+}
+
+td {
+    color: #e2eaf5;
+}
+
+tbody tr:hover {
+    background: #172d4b;
+}
+
+#emptyMessage {
+    display: none;
+    text-align: center;
+    color: #9aabc5;
+    padding: 25px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 16px 5%;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .assignment-box {
+        padding: 15px;
+    }
+}
