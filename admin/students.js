@@ -1,33 +1,55 @@
+
 // ==========================================
 // CAMPUS360 ADMIN STUDENT MANAGEMENT
-// MONGODB INTEGRATION
+// JWT AUTHENTICATION
 // ==========================================
 
-// ADMIN SESSION CHECK
+const adminToken = sessionStorage.getItem("campus360AdminToken");
 
-if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
+if (!adminToken || sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
+    sessionStorage.removeItem("campus360AdminToken");
+    sessionStorage.removeItem("campus360AdminLoggedIn");
 
-    alert("Access Denied! Please Login as Admin.");
-
+    alert("Admin session expired. Please login again.");
     window.location.replace("../pages/admin-login.html");
 
 } else {
 
-    // GET HTML ELEMENTS
+    const API_BASE_URL = "https://campus360-lsvd.onrender.com/api/admin";
 
     const studentTable = document.getElementById("studentTable");
     const studentCount = document.getElementById("studentCount");
     const searchInput = document.getElementById("searchStudent");
     const emptyMessage = document.getElementById("emptyMessage");
 
-    // STUDENT DATA
-
     let students = [];
 
-    // ======================================
-    // FETCH STUDENTS FROM MONGODB
-    // ======================================
+    // AUTHORIZATION HEADER
+    function getAdminHeaders() {
+        return {
+            "Authorization": `Bearer ${sessionStorage.getItem("campus360AdminToken")}`
+        };
+    }
 
+    // CHECK AUTHENTICATION FAILURE
+    function handleAuthFailure(response) {
+
+        if (response.status === 401 || response.status === 403) {
+
+            sessionStorage.removeItem("campus360AdminToken");
+            sessionStorage.removeItem("campus360AdminLoggedIn");
+
+            alert("Your admin session has expired. Please login again.");
+
+            window.location.replace("../pages/admin-login.html");
+
+            return true;
+        }
+
+        return false;
+    }
+
+    // LOAD STUDENTS
     async function loadStudents() {
 
         studentTable.innerHTML = `
@@ -38,9 +60,12 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
 
         try {
 
-            const response = await fetch(
-                "http://localhost:5000/api/admin/students"
-            );
+            const response = await fetch(`${API_BASE_URL}/students`, {
+                method: "GET",
+                headers: getAdminHeaders()
+            });
+
+            if (handleAuthFailure(response)) return;
 
             const data = await response.json();
 
@@ -59,18 +84,13 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             studentTable.innerHTML = "";
 
             emptyMessage.textContent =
-                "Unable to load students. Please check backend server.";
+                error.message || "Unable to load students.";
 
             emptyMessage.style.display = "block";
-
         }
-
     }
 
-    // ======================================
     // DISPLAY STUDENTS
-    // ======================================
-
     function displayStudents(data) {
 
         studentTable.innerHTML = "";
@@ -80,11 +100,9 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
         if (data.length === 0) {
 
             emptyMessage.textContent = "No students found.";
-
             emptyMessage.style.display = "block";
 
             return;
-
         }
 
         emptyMessage.style.display = "none";
@@ -108,23 +126,18 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
                 cell.textContent = value || "-";
 
                 row.appendChild(cell);
-
             });
 
             // DELETE BUTTON
-
             const actionCell = document.createElement("td");
 
             const deleteButton = document.createElement("button");
 
             deleteButton.textContent = "Delete";
-
             deleteButton.className = "delete-btn";
 
             deleteButton.addEventListener("click", () => {
-
                 deleteStudent(student.studentId);
-
             });
 
             actionCell.appendChild(deleteButton);
@@ -132,15 +145,10 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             row.appendChild(actionCell);
 
             studentTable.appendChild(row);
-
         });
-
     }
 
-    // ======================================
     // SEARCH STUDENTS
-    // ======================================
-
     searchInput.addEventListener("input", function() {
 
         const query = this.value.trim().toLowerCase();
@@ -148,22 +156,18 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
         const filteredStudents = students.filter(student => {
 
             return (
-                student.name.toLowerCase().includes(query) ||
-                student.studentId.toLowerCase().includes(query) ||
-                student.email.toLowerCase().includes(query) ||
-                student.department.toLowerCase().includes(query)
+                (student.name || "").toLowerCase().includes(query) ||
+                (student.studentId || "").toLowerCase().includes(query) ||
+                (student.email || "").toLowerCase().includes(query) ||
+                (student.department || "").toLowerCase().includes(query)
             );
 
         });
 
         displayStudents(filteredStudents);
-
     });
 
-    // ======================================
-    // DELETE STUDENT FROM MONGODB
-    // ======================================
-
+    // DELETE STUDENT
     async function deleteStudent(studentId) {
 
         const confirmDelete = confirm(
@@ -175,11 +179,14 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
         try {
 
             const response = await fetch(
-                `http://localhost:5000/api/admin/students/${encodeURIComponent(studentId)}`,
+                `${API_BASE_URL}/students/${encodeURIComponent(studentId)}`,
                 {
-                    method: "DELETE"
+                    method: "DELETE",
+                    headers: getAdminHeaders()
                 }
             );
+
+            if (handleAuthFailure(response)) return;
 
             const data = await response.json();
 
@@ -188,12 +195,9 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
                 alert(data.message || "Student deletion failed!");
 
                 return;
-
             }
 
             alert("Student deleted successfully!");
-
-            // REFRESH STUDENT LIST
 
             await loadStudents();
 
@@ -202,15 +206,9 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             console.error("Delete Student Error:", error);
 
             alert("Server connection failed!");
-
         }
-
     }
 
-    // ======================================
-    // INITIALIZE STUDENT MANAGEMENT
-    // ======================================
-
+    // INITIALIZE
     loadStudents();
-
 }

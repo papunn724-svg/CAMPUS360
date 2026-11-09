@@ -1,31 +1,98 @@
+
+// ==========================================
 // CAMPUS360 ADMIN LOGIN
+// BACKEND AUTHENTICATION
+// ==========================================
 
 const adminLoginForm = document.getElementById("adminLoginForm");
 
-adminLoginForm.addEventListener("submit", function(event) {
+if (adminLoginForm) {
 
-    event.preventDefault();
+    adminLoginForm.addEventListener("submit", async function(event) {
 
-    const email = document.getElementById("adminEmail").value.trim();
-    const password = document.getElementById("adminPassword").value;
+        event.preventDefault();
 
-    // DEMO ADMIN CREDENTIALS
-    const adminEmail = "admin@campus360.com";
-    const adminPassword = "Admin@123";
+        const email = document.getElementById("adminEmail").value.trim();
 
-    if (email === adminEmail && password === adminPassword) {
+        const password = document.getElementById("adminPassword").value;
 
-        sessionStorage.setItem("campus360AdminLoggedIn", "true");
+        const loginMessage = document.getElementById("loginMessage");
 
-        alert("Admin Login Successful!");
+        loginMessage.textContent = "";
 
-        window.location.href = "../admin/admin.html";
+        if (!email || !password) {
 
-    } else {
+            loginMessage.textContent = "Please enter email and password!";
 
-        document.getElementById("loginMessage").textContent =
-            "Invalid Admin Email or Password!";
+            return;
+        }
 
-    }
+        const submitButton = adminLoginForm.querySelector(
+            'button[type="submit"], input[type="submit"]'
+        );
 
-});
+        if (submitButton) submitButton.disabled = true;
+
+        try {
+
+            const response = await fetch(
+                "https://campus360-lsvd.onrender.com/api/admin/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message || "Admin Login Failed!"
+                );
+            }
+
+            if (!data.token) {
+
+                throw new Error(
+                    "Server did not return an admin token."
+                );
+            }
+
+            // SAVE ADMIN JWT TOKEN
+            sessionStorage.setItem(
+                "campus360AdminToken",
+                data.token
+            );
+
+            sessionStorage.setItem(
+                "campus360AdminLoggedIn",
+                "true"
+            );
+
+            alert("Admin Login Successful!");
+
+            window.location.href = "../admin/admin.html";
+
+        } catch (error) {
+
+            console.error("Admin Login Error:", error);
+
+            loginMessage.textContent =
+                error.message || "Server connection failed!";
+
+        } finally {
+
+            if (submitButton) submitButton.disabled = false;
+        }
+
+    });
+}

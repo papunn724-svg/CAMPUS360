@@ -11,7 +11,7 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
     const searchInput = document.getElementById("searchSubmission");
     const emptyMessage = document.getElementById("emptyMessage");
 
-    const API_URL = "http://localhost:5000/api/admin/submissions";
+    const API_URL = "https://campus360-lsvd.onrender.com/api/admin/submissions";
 
     let submissions = [];
 

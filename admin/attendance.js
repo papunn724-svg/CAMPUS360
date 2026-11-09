@@ -1,8 +1,23 @@
-// ADMIN LOGIN CHECK
-if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
-    alert("Access Denied! Please Login as Admin.");
+
+// ==========================================
+// CAMPUS360 ADMIN ATTENDANCE MANAGEMENT
+// JWT AUTHENTICATION
+// ==========================================
+
+const adminToken = sessionStorage.getItem("campus360AdminToken");
+
+if (!adminToken || sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
+
+    sessionStorage.removeItem("campus360AdminToken");
+    sessionStorage.removeItem("campus360AdminLoggedIn");
+
+    alert("Admin session expired. Please login again.");
+
     window.location.replace("../pages/admin-login.html");
+
 } else {
+
+    const API_BASE_URL = "https://campus360-lsvd.onrender.com/api/admin";
 
     const table = document.getElementById("attendanceTable");
     const searchInput = document.getElementById("searchStudent");
@@ -17,9 +32,37 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
     let students = [];
     let attendanceRecords = [];
 
-    // GET LOCAL DATE
+    // AUTHORIZATION HEADER
+    function getAdminHeaders() {
+
+        return {
+            "Authorization": `Bearer ${sessionStorage.getItem("campus360AdminToken")}`
+        };
+    }
+
+    // AUTHENTICATION FAILURE
+    function handleAuthFailure(response) {
+
+        if (response.status === 401 || response.status === 403) {
+
+            sessionStorage.removeItem("campus360AdminToken");
+            sessionStorage.removeItem("campus360AdminLoggedIn");
+
+            alert("Your admin session has expired. Please login again.");
+
+            window.location.replace("../pages/admin-login.html");
+
+            return true;
+        }
+
+        return false;
+    }
+
+    // GET TODAY DATE
     function getTodayDate() {
+
         const today = new Date();
+
         const year = today.getFullYear();
         const month = String(today.getMonth() + 1).padStart(2, "0");
         const day = String(today.getDate()).padStart(2, "0");
@@ -31,13 +74,34 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
 
     // LOAD STUDENTS AND ATTENDANCE
     async function loadAttendance() {
+
         try {
+
+            const headers = getAdminHeaders();
+
             const [studentsResponse, attendanceResponse] = await Promise.all([
-                fetch("http://localhost:5000/api/admin/students"),
-                fetch("http://localhost:5000/api/admin/attendance")
+
+                fetch(`${API_BASE_URL}/students`, {
+                    method: "GET",
+                    headers
+                }),
+
+                fetch(`${API_BASE_URL}/attendance`, {
+                    method: "GET",
+                    headers
+                })
+
             ]);
 
+            if (
+                handleAuthFailure(studentsResponse) ||
+                handleAuthFailure(attendanceResponse)
+            ) {
+                return;
+            }
+
             if (!studentsResponse.ok || !attendanceResponse.ok) {
+
                 throw new Error("Failed to load attendance data.");
             }
 
@@ -50,8 +114,10 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             displayAttendance();
 
         } catch (error) {
+
             console.error("Attendance Error:", error);
-            alert("Unable to load attendance. Check your backend server.");
+
+            alert(error.message || "Unable to load attendance.");
         }
     }
 
@@ -65,6 +131,7 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
         const searchText = searchInput.value.toLowerCase().trim();
 
         const filteredStudents = students.filter(student => {
+
             return (
                 (student.name || "").toLowerCase().includes(searchText) ||
                 (student.studentId || "").toLowerCase().includes(searchText)
@@ -77,12 +144,14 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
         let absentCount = 0;
 
         students.forEach(student => {
+
             const todayRecord = attendanceRecords.find(record =>
                 record.studentId === student.studentId &&
                 record.date === selectedDate
             );
 
             if (todayRecord?.status === "Present") presentCount++;
+
             if (todayRecord?.status === "Absent") absentCount++;
         });
 
@@ -123,8 +192,11 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             const row = document.createElement("tr");
 
             function addCell(value) {
+
                 const cell = document.createElement("td");
+
                 cell.textContent = value;
+
                 row.appendChild(cell);
             }
 
@@ -139,14 +211,18 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             const actionCell = document.createElement("td");
 
             const statusText = document.createElement("div");
+
             statusText.textContent = "Status: " + currentStatus;
+
             statusText.style.marginBottom = "8px";
 
             const presentButton = document.createElement("button");
+
             presentButton.textContent = "Present";
             presentButton.className = "present-btn";
 
             const absentButton = document.createElement("button");
+
             absentButton.textContent = "Absent";
             absentButton.className = "absent-btn";
 
@@ -166,6 +242,7 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             actionCell.appendChild(absentButton);
 
             row.appendChild(actionCell);
+
             table.appendChild(row);
         });
     }
@@ -176,30 +253,39 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
         const selectedDate = dateInput.value;
 
         if (!selectedDate) {
+
             alert("Please select an attendance date.");
+
             return;
         }
 
         try {
-            const response = await fetch(
-                "http://localhost:5000/api/admin/attendance",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        studentId: studentId,
-                        date: selectedDate,
-                        status: status
-                    })
-                }
-            );
+
+            const response = await fetch(`${API_BASE_URL}/attendance`, {
+
+                method: "POST",
+
+                headers: {
+                    ...getAdminHeaders(),
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    studentId: studentId,
+                    date: selectedDate,
+                    status: status
+                })
+            });
+
+            if (handleAuthFailure(response)) return;
 
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.message || "Attendance could not be saved.");
+
+                throw new Error(
+                    result.message || "Attendance could not be saved."
+                );
             }
 
             alert(status + " attendance saved successfully!");
@@ -207,7 +293,9 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
             await loadAttendance();
 
         } catch (error) {
+
             console.error("Mark Attendance Error:", error);
+
             alert(error.message || "Unable to save attendance.");
         }
     }

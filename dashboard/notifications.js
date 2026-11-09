@@ -4,7 +4,7 @@
 // MongoDB Backend Connected
 // ======================================
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://campus360-lsvd.onrender.com/api";
 
 // HTML ELEMENTS
 const notificationList = document.getElementById("notificationList");
