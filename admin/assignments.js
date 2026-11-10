@@ -19,7 +19,7 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
     const dueDateInput = document.getElementById("assignmentDueDate");
     const marksInput = document.getElementById("assignmentMarks");
 
-    const API_URL = "https://campus360-isvd.onrender.com/api/admin/assignments";
+    const API_URL = "https://campus360-lsvd.onrender.com/api/admin/assignments";
 
     let assignments = [];
     let editingId = null;

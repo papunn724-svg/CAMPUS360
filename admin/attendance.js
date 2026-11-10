@@ -17,7 +17,7 @@ if (!adminToken || sessionStorage.getItem("campus360AdminLoggedIn") !== "true") 
 
 } else {
 
-    const API_BASE_URL = "https://campus360-isvd.onrender.com/api/admin";
+    const API_BASE_URL = "https://campus360-lsvd.onrender.com/api/admin";
 
     const table = document.getElementById("attendanceTable");
     const searchInput = document.getElementById("searchStudent");

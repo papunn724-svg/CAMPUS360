@@ -61,7 +61,7 @@ registerForm.addEventListener("submit", async function(event) {
 
     try {
 
-        const response = await fetch("https://campus360-isvd.onrender.com/api/register", {
+        const response = await fetch("https://campus360-lsvd.onrender.com/api/register", {
 
             method: "POST",
 

@@ -4,7 +4,7 @@
  * localStorage.setItem("campus360ApiOrigin", "http://localhost:5000")
  */
 (function () {
-    const DEFAULT_API_ORIGIN = "https://campus360-isvd.onrender.com";
+    const DEFAULT_API_ORIGIN = "https://campus360-lsvd.onrender.com";
     const API_ORIGIN = (localStorage.getItem("campus360ApiOrigin") || DEFAULT_API_ORIGIN)
         .replace(/\/+$/, "");
     window.CAMPUS360_API_ORIGIN = API_ORIGIN;
@@ -15,7 +15,7 @@
         let url = typeof resource === "string" ? resource :
             (resource && resource.url ? resource.url : "");
 
-        if (url && url.includes("campus360-isvd.onrender.com")) {
+        if (url && url.includes("campus360-lsvd.onrender.com")) {
             url = url.replace(/^https?:\/\/campus360-lsvd\.onrender\.com/i, API_ORIGIN);
             resource = url;
         }

@@ -36,7 +36,7 @@ if (adminLoginForm) {
         try {
 
             const response = await fetch(
-                "https://campus360-isvd.onrender.com/api/admin/login",
+                "https://campus360-lsvd.onrender.com/api/admin/login",
                 {
                     method: "POST",
 
