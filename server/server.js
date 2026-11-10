@@ -10,6 +10,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+const Admin = require("./admin");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
@@ -337,72 +339,93 @@ app.post("/api/login", async (req, res) => {
 console.log("ADMIN LOGIN ROUTE LOADED");
 
 app.post("/api/admin/login", async (req, res) => {
-
     try {
-
         const { email, password } = req.body || {};
-
-        if (
-            typeof email !== "string" ||
-            typeof password !== "string" ||
-            !email.trim() ||
-            !password
-        ) {
-
-            return res.status(400).json({
-                message: "Email and password are required!"
-            });
+        if (typeof email !== "string" || typeof password !== "string" || !email.trim() || !password) return res.status(400).json({ message: "Email and password are required!" });
+        if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD_HASH) return res.status(503).json({ message: "Admin login is not configured." });
+        const cleanEmail = email.trim().toLowerCase();
+        if (cleanEmail !== process.env.ADMIN_EMAIL.trim().toLowerCase()) return res.status(401).json({ message: "Invalid Admin Email or Password!" });
+        let admin = await Admin.findOne({ email: cleanEmail });
+        if (!admin) {
+            const valid = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
+            if (!valid) return res.status(401).json({ message: "Invalid Admin Email or Password!" });
+            admin = await Admin.create({ email: cleanEmail, password: process.env.ADMIN_PASSWORD_HASH });
+        } else if (!(await bcrypt.compare(password, admin.password))) {
+            return res.status(401).json({ message: "Invalid Admin Email or Password!" });
         }
+        admin.lastLoginAt = new Date();
+        admin.loginHistory.unshift({ at: new Date(), ip: req.ip, userAgent: req.get("user-agent") || "" });
+        admin.loginHistory = admin.loginHistory.slice(0, 10);
+        await admin.save();
+        const token = jwt.sign({ sub: String(admin._id), role: "admin", ver: admin.tokenVersion }, process.env.JWT_SECRET, { expiresIn: "1d", issuer: "campus360" });
+        return res.json({ message: "Admin Login Successful!", token });
+    } catch (error) { console.error("Admin Login Error:", error); return res.status(500).json({ message: "Admin Login Failed!" }); }
+});
 
-        if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD_HASH) {
+// ADMIN PROFILE AND SECURITY
+app.get("/api/admin/profile", authenticateToken, requireAdmin, async (req, res) => {
+  const admin = await Admin.findById(req.adminId).select("-password -resetCodeHash -resetCodeExpires -tokenVersion -loginHistory");
+  if (!admin) return res.status(404).json({ message: "Admin profile not found." });
+  res.json({ admin });
+});
 
-            return res.status(503).json({
-                message: "Admin login is not configured."
-            });
-        }
+app.put("/api/admin/profile", authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { name, phone } = req.body || {};
+    if (typeof name !== "string" || !name.trim() || name.trim().length > 80) return res.status(400).json({ message: "Enter a valid name (maximum 80 characters)." });
+    if (phone !== undefined && (typeof phone !== "string" || phone.length > 25)) return res.status(400).json({ message: "Enter a valid phone number." });
+    const admin = await Admin.findByIdAndUpdate(req.adminId, { $set: { name: name.trim(), phone: phone || "" } }, { new: true, runValidators: true }).select("-password -resetCodeHash -resetCodeExpires -tokenVersion -loginHistory");
+    res.json({ message: "Profile updated successfully.", admin });
+  } catch (error) { res.status(500).json({ message: "Could not update profile." }); }
+});
 
-        const emailMatches =
-            email.trim().toLowerCase() ===
-            process.env.ADMIN_EMAIL.trim().toLowerCase();
+app.get("/api/admin/security/activity", authenticateToken, requireAdmin, async (req, res) => {
+  const admin = await Admin.findById(req.adminId).select("lastLoginAt loginHistory");
+  res.json({ lastLoginAt: admin.lastLoginAt, loginHistory: admin.loginHistory });
+});
 
-        const passwordMatches = await bcrypt.compare(
-            password,
-            process.env.ADMIN_PASSWORD_HASH
-        );
+app.post("/api/admin/change-password", authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body || {};
+    if (typeof currentPassword !== "string" || typeof newPassword !== "string" || newPassword.length < 10 || newPassword.length > 128) return res.status(400).json({ message: "New password must be 10–128 characters." });
+    const admin = await Admin.findById(req.adminId);
+    if (!(await bcrypt.compare(currentPassword, admin.password))) return res.status(401).json({ message: "Current password is incorrect." });
+    admin.password = await bcrypt.hash(newPassword, 12); admin.tokenVersion += 1; admin.resetCodeHash = null; admin.resetCodeExpires = null; await admin.save();
+    res.json({ message: "Password changed. Please log in again on all devices." });
+  } catch (error) { res.status(500).json({ message: "Could not change password." }); }
+});
 
-        if (!emailMatches || !passwordMatches) {
+app.post("/api/admin/forgot-password", async (req, res) => {
+  const generic = { message: "If the admin email is registered, a recovery code will be sent shortly." };
+  try {
+    const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
+    const admin = await Admin.findOne({ email });
+    if (!admin) return res.json(generic);
+    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL) return res.status(503).json({ message: "Email recovery is not configured on the server yet." });
+    const code = String(crypto.randomInt(100000, 1000000));
+    admin.resetCodeHash = crypto.createHash("sha256").update(code).digest("hex");
+    admin.resetCodeExpires = new Date(Date.now() + 10 * 60 * 1000); await admin.save();
+    const mail = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: process.env.RESEND_FROM_EMAIL, to: [admin.email], subject: "CAMPUS360 Admin Password Recovery", html: `<p>Your CAMPUS360 admin recovery code is:</p><h2>${code}</h2><p>It expires in 10 minutes. If you did not request this, ignore this email.</p>` }) });
+    if (!mail.ok) { console.error("Resend delivery failed:", await mail.text()); admin.resetCodeHash = null; admin.resetCodeExpires = null; await admin.save(); return res.status(502).json({ message: "Recovery email could not be sent. Please try later." }); }
+    return res.json(generic);
+  } catch (error) { console.error("Forgot password error:", error.message); return res.status(500).json({ message: "Could not process password recovery." }); }
+});
 
-            return res.status(401).json({
-                message: "Invalid Admin Email or Password!"
-            });
-        }
+app.post("/api/admin/reset-password", async (req, res) => {
+  try {
+    const { email, code, newPassword } = req.body || {};
+    if (typeof email !== "string" || typeof code !== "string" || !/^\d{6}$/.test(code) || typeof newPassword !== "string" || newPassword.length < 10 || newPassword.length > 128) return res.status(400).json({ message: "Enter the email, 6-digit code and a 10–128 character password." });
+    const admin = await Admin.findOne({ email: email.trim().toLowerCase() });
+    const hash = crypto.createHash("sha256").update(code).digest("hex");
+    if (!admin || !admin.resetCodeHash || admin.resetCodeExpires < new Date() || !crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(admin.resetCodeHash))) return res.status(400).json({ message: "Invalid or expired recovery code." });
+    admin.password = await bcrypt.hash(newPassword, 12); admin.resetCodeHash = null; admin.resetCodeExpires = null; admin.tokenVersion += 1; await admin.save();
+    res.json({ message: "Password reset successfully. Please log in with your new password." });
+  } catch (error) { res.status(500).json({ message: "Could not reset password." }); }
+});
 
-        const token = jwt.sign(
-            {
-                sub: "campus360-admin",
-                role: "admin"
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "1d",
-                issuer: "campus360"
-            }
-        );
-
-        return res.status(200).json({
-            message: "Admin Login Successful!",
-            token
-        });
-
-    } catch (error) {
-
-        console.error("Admin Login Error:", error);
-
-        return res.status(500).json({
-            message: "Admin Login Failed!"
-        });
-    }
-
+app.post("/api/admin/logout-all", authenticateToken, requireAdmin, async (req, res) => {
+  await Admin.findByIdAndUpdate(req.adminId, { $inc: { tokenVersion: 1 } });
+  res.json({ message: "All admin sessions have been logged out." });
 });
 
 // ==========================================
@@ -1687,6 +1710,14 @@ async function startServer() {
     try {
         await mongoose.connect(process.env.MONGO_URI);
         console.log("CAMPUS360 MongoDB connected.");
+        // Seed the first admin from hosting environment variables, without exposing credentials.
+        if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD_HASH) {
+            await Admin.updateOne(
+                { email: process.env.ADMIN_EMAIL.trim().toLowerCase() },
+                { $setOnInsert: { email: process.env.ADMIN_EMAIL.trim().toLowerCase(), password: process.env.ADMIN_PASSWORD_HASH, name: "CAMPUS360 Administrator" } },
+                { upsert: true }
+            );
+        }
 
         app.listen(PORT, () => {
             console.log("------------------------------------");

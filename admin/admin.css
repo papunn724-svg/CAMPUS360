@@ -147,3 +147,4 @@ body {
     display: block;
     cursor: pointer;
 }
+.admin-top-links{display:flex;gap:10px;align-items:center}.admin-top-links a{display:inline-block}@media(max-width:600px){.header{gap:12px;flex-wrap:wrap}.admin-top-links{flex-wrap:wrap}.stats{grid-template-columns:repeat(2,1fr)}.menu-grid{grid-template-columns:1fr}}

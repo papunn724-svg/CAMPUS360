@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAMPUS360 | Student Profile</title>
     <link rel="stylesheet" href="profile.css">
+
+<script>
+// CAMPUS360: block direct access without an authenticated student session.
+(function () {
+  const token = sessionStorage.getItem("campus360StudentToken");
+  const rawStudent = sessionStorage.getItem("campus360CurrentStudent");
+  let validStudent = false;
+  try { validStudent = !!rawStudent && !!JSON.parse(rawStudent); } catch (_) {}
+  if (!token || !validStudent) {
+    sessionStorage.removeItem("campus360StudentToken");
+    sessionStorage.removeItem("campus360CurrentStudent");
+    window.location.replace("../pages/login.html");
+  }
+})();
+</script>
 </head>
 <body>
 

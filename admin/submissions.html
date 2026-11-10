@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAMPUS360 | Student Submissions</title>
     <link rel="stylesheet" href="submissions.css">
+
+<script>
+// CAMPUS360: block direct access without an authenticated admin session.
+(function () {
+  const token = sessionStorage.getItem("campus360AdminToken");
+  const loggedIn = sessionStorage.getItem("campus360AdminLoggedIn") === "true";
+  if (!token || !loggedIn) {
+    sessionStorage.removeItem("campus360AdminToken");
+    sessionStorage.removeItem("campus360AdminLoggedIn");
+    window.location.replace("../pages/admin-login.html");
+  }
+})();
+</script>
 </head>
 <body>
 

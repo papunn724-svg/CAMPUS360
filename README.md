@@ -75,3 +75,13 @@ and put the connection string in the backend environment variables. Never commit
 - Uploaded assignment files are limited to PDF, DOC, or DOCX and 2 MB.
 - This is a college-project starter. Before production use, add stronger operational
   controls such as rate limiting, account recovery, audit logging, and managed backups.
+
+
+## Admin profile and password recovery
+
+The admin account is seeded from `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` on first backend startup. After the first successful login, the account is stored in MongoDB so password changes and recovery persist. Configure these Render environment variables for email recovery:
+
+- `RESEND_API_KEY`: API key from Resend.
+- `RESEND_FROM_EMAIL`: sender address on a domain verified in Resend (for example `CAMPUS360 <no-reply@example.com>`).
+
+Deploy the updated `server` folder to Render. The admin recovery code expires after 10 minutes. Admin profile, password change, login history and logout-all are available from **Admin Profile** in the admin dashboard. Never commit `.env` or share API keys.

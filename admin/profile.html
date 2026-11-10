@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CAMPUS360 | Admin Profile</title><link rel="stylesheet" href="profile.css">
+<script>
+// CAMPUS360: block direct access without an authenticated admin session.
+(function () {
+  const token = sessionStorage.getItem("campus360AdminToken");
+  const loggedIn = sessionStorage.getItem("campus360AdminLoggedIn") === "true";
+  if (!token || !loggedIn) {
+    sessionStorage.removeItem("campus360AdminToken");
+    sessionStorage.removeItem("campus360AdminLoggedIn");
+    window.location.replace("../pages/admin-login.html");
+  }
+})();
+</script>
+</head><body>
+<header><a href="admin.html">← Dashboard</a><strong>CAMPUS<span>360</span></strong><button id="logoutAll" class="secondary">Logout all devices</button></header>
+<main><section class="panel"><div class="avatar" id="avatar">A</div><h1>Admin Profile</h1><p class="muted">Manage your administrator account</p><form id="profileForm"><label>Admin name</label><input id="name" maxlength="80" required><label>Registered email</label><input id="email" type="email" disabled><label>Phone number</label><input id="phone" maxlength="25"><button>Save Profile</button><p id="profileMsg" class="msg"></p></form></section>
+<section class="panel"><h2>Change Password</h2><form id="passwordForm"><label>Current password</label><input id="currentPassword" type="password" required><label>New password (10–128 characters)</label><input id="newPassword" type="password" minlength="10" maxlength="128" required><label>Confirm new password</label><input id="confirmPassword" type="password" required><button>Update Password</button><p id="passwordMsg" class="msg"></p></form></section>
+<section class="panel"><h2>Recent Login Activity</h2><p id="lastLogin" class="muted">Loading…</p><ul id="activity"></ul></section></main><script src="../config.js"></script><script src="profile.js"></script></body></html>
