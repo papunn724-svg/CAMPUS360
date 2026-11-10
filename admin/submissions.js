@@ -11,7 +11,7 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
     const searchInput = document.getElementById("searchSubmission");
     const emptyMessage = document.getElementById("emptyMessage");
 
-    const API_URL = "https://campus360-lsvd.onrender.com/api/admin/submissions";
+    const API_URL = "https://campus360-isvd.onrender.com/api/admin/submissions";
 
     let submissions = [];
 
@@ -93,8 +93,33 @@ if (sessionStorage.getItem("campus360AdminLoggedIn") !== "true") {
                 fileLink.href =
                     `${API_URL}/${encodeURIComponent(submission._id)}/file`;
 
-                fileLink.target = "_blank";
-                fileLink.rel = "noopener noreferrer";
+                fileLink.href = "#";
+                fileLink.addEventListener("click", async function (event) {
+                    event.preventDefault();
+                    fileLink.textContent = "Loading...";
+                    try {
+                        const response = await fetch(
+                            `${API_URL}/${encodeURIComponent(submission._id)}/file`
+                        );
+                        if (!response.ok) {
+                            const result = await response.json().catch(() => ({}));
+                            throw new Error(result.message || "Download failed.");
+                        }
+                        const blob = await response.blob();
+                        const objectUrl = URL.createObjectURL(blob);
+                        const download = document.createElement("a");
+                        download.href = objectUrl;
+                        download.download = submission.fileName || "submission";
+                        document.body.appendChild(download);
+                        download.click();
+                        download.remove();
+                        URL.revokeObjectURL(objectUrl);
+                    } catch (error) {
+                        alert(error.message || "Unable to download file.");
+                    } finally {
+                        fileLink.textContent = submission.fileName || "View File";
+                    }
+                });
 
                 fileCell.appendChild(fileLink);
 

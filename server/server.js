@@ -841,6 +841,29 @@ app.delete(
 // ==========================================
 
 app.get(
+    "/api/student/attendance",
+    authenticateToken,
+    requireStudent,
+    async (req, res) => {
+        try {
+            const attendance = await Attendance.find({
+                studentId: req.student.studentId
+            }).sort({ date: -1 });
+
+            return res.status(200).json({
+                message: "Attendance fetched successfully!",
+                attendance
+            });
+        } catch (error) {
+            console.error("Student Attendance Error:", error);
+            return res.status(500).json({
+                message: "Failed to fetch attendance!"
+            });
+        }
+    }
+);
+
+app.get(
     "/api/student/assignments",
     authenticateToken,
     requireStudent,
@@ -1354,6 +1377,89 @@ app.delete(
 );
 
 // ==========================================
+// ADMIN - NOTIFICATIONS
+// ==========================================
+
+app.get(
+    "/api/admin/notifications",
+    authenticateToken,
+    requireAdmin,
+    async (req, res) => {
+        try {
+            const notifications = await Notification.find()
+                .sort({ createdAt: -1 })
+                .limit(300);
+            return res.status(200).json({ notifications });
+        } catch (error) {
+            console.error("Admin Notification Fetch Error:", error);
+            return res.status(500).json({ message: "Failed to load notifications." });
+        }
+    }
+);
+
+app.post(
+    "/api/admin/notifications",
+    authenticateToken,
+    requireAdmin,
+    async (req, res) => {
+        try {
+            const { title, message, category = "Announcement" } = req.body || {};
+            const allowedCategories = ["Assignment", "Attendance", "Event", "Announcement", "Result"];
+
+            if (
+                typeof title !== "string" || !title.trim() ||
+                typeof message !== "string" || !message.trim() ||
+                !allowedCategories.includes(category)
+            ) {
+                return res.status(400).json({ message: "Enter a title, message, and valid category." });
+            }
+
+            const students = await Student.find().select("studentId");
+            if (!students.length) {
+                return res.status(404).json({ message: "No registered students to notify." });
+            }
+
+            const docs = students.map(student => ({
+                studentId: student.studentId,
+                title: title.trim(),
+                message: message.trim(),
+                category
+            }));
+
+            await Notification.insertMany(docs);
+            return res.status(201).json({
+                message: `Notification sent to ${docs.length} student(s).`,
+                sentCount: docs.length
+            });
+        } catch (error) {
+            console.error("Admin Notification Create Error:", error);
+            return res.status(500).json({ message: "Failed to send notification." });
+        }
+    }
+);
+
+app.delete(
+    "/api/admin/notifications/:id",
+    authenticateToken,
+    requireAdmin,
+    async (req, res) => {
+        try {
+            if (!isValidId(req.params.id)) {
+                return res.status(400).json({ message: "Invalid notification ID." });
+            }
+            const deleted = await Notification.findByIdAndDelete(req.params.id);
+            if (!deleted) {
+                return res.status(404).json({ message: "Notification not found." });
+            }
+            return res.status(200).json({ message: "Notification deleted." });
+        } catch (error) {
+            console.error("Admin Notification Delete Error:", error);
+            return res.status(500).json({ message: "Failed to delete notification." });
+        }
+    }
+);
+
+// ==========================================
 // STUDENT - NOTIFICATIONS
 // ==========================================
 
@@ -1569,11 +1675,29 @@ app.use((error, req, res, next) => {
 // SERVER START
 // ==========================================
 
-app.listen(PORT, () => {
-
-    console.log("------------------------------------");
-    console.log("CAMPUS360 Backend Server Started!");
-    console.log(`Server listening on port ${PORT}`);
-    console.log("------------------------------------");
-
+app.get("/api/health", (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        service: "CAMPUS360 API",
+        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected"
+    });
 });
+
+async function startServer() {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("CAMPUS360 MongoDB connected.");
+
+        app.listen(PORT, () => {
+            console.log("------------------------------------");
+            console.log("CAMPUS360 Backend Server Started!");
+            console.log(`Server listening on port ${PORT}`);
+            console.log("------------------------------------");
+        });
+    } catch (error) {
+        console.error("CAMPUS360 startup failed:", error.message);
+        process.exit(1);
+    }
+}
+
+startServer();

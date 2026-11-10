@@ -12,7 +12,7 @@ if (!student) {
 
 } else {
 
-    const API_URL = "https://campus360-lsvd.onrender.com/api/student";
+    const API_URL = "https://campus360-isvd.onrender.com/api/student";
 
     const list = document.getElementById("assignmentList");
     const searchInput = document.getElementById("search");

@@ -27,7 +27,15 @@
                 <textarea id="notificationMessage"
                     placeholder="Enter notification message" required></textarea>
 
-                <button type="submit">Send Notification</button>
+                <select id="notificationCategory" required>
+                    <option value="Announcement">Announcement</option>
+                    <option value="Assignment">Assignment</option>
+                    <option value="Attendance">Attendance</option>
+                    <option value="Event">Event</option>
+                    <option value="Result">Result</option>
+                </select>
+
+                <button type="submit">Send to All Students</button>
             </form>
         </section>
 
@@ -37,6 +45,7 @@
         </section>
     </main>
 
+    <script src="../config.js"></script>
     <script src="notifications.js"></script>
 </body>
 </html>

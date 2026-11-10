@@ -28,7 +28,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     }
 
     try {
-        const response = await fetch("https://campus360-lsvd.onrender.com/api/login", {
+        const response = await fetch("https://campus360-isvd.onrender.com/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -47,6 +47,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         }
 
         // SAVE LOGIN SESSION
+        sessionStorage.setItem("campus360StudentToken", data.token);
         sessionStorage.setItem(
             "campus360CurrentStudent",
             JSON.stringify(data.student)

@@ -49,9 +49,8 @@ if (!currentStudent) {
 
             if (confirmLogout) {
 
-                sessionStorage.removeItem(
-                    "campus360CurrentStudent"
-                );
+                sessionStorage.removeItem("campus360CurrentStudent");
+                sessionStorage.removeItem("campus360StudentToken");
 
                 window.location.replace("../pages/login.html");
 

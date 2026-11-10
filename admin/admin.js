@@ -63,6 +63,7 @@ if (adminLogout) {
         event.preventDefault();
 
         sessionStorage.removeItem("campus360AdminLoggedIn");
+        sessionStorage.removeItem("campus360AdminToken");
 
         alert("Admin Logout Successful!");
 
