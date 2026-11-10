@@ -366,3 +366,8 @@ footer p {
         gap: 20px;
     }
 }
+/* Landing page admin entry */
+.nav-buttons {display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.admin-login {background:#172e53;border:1px solid #8d9fff;color:white}
+.admin-login:hover,.admin-login:focus-visible {background:#263f72}
+@media(max-width:500px){.nav-buttons{width:100%;justify-content:center}.nav-buttons button{padding:11px 14px;font-size:12px}}
